@@ -1,9 +1,5 @@
-
 ## IXmon 
-
-Information eXtraction and MONitoring tool
-==============
-
+###### Information eXtraction and MONitoring tool
 A terminal based
 (rss/atom/youtube/vine/instagram/weather/stocks/cryptocurrency/kitchen sink)
 feed reader and monitor written in php.
