@@ -1,8 +1,10 @@
 
-## IXmon console client (Information eXtraction and MONitoring tool)
+## IXmon 
+(Information eXtraction and MONitoring tool)
 ==============
 
-A terminal based (rss/atom/youtube/vine/instagram/weather/stocks/kitchen sink)
+A terminal based
+(rss/atom/youtube/vine/instagram/weather/stocks/cryptocurrency/kitchen sink)
 feed reader and monitor written in php.
 
 ### Installation
@@ -26,7 +28,7 @@ monitor
     # lines begining with a -- are group names
     #
     #
-    # the following example would create a group called 'trend data' with two feed url 
+    # the following example would create a group called 'trend data' with two feed urls 
     # and a group called 'my crypto' tracking bitcoin and litecoin
     # 
     # --trend data
@@ -44,4 +46,8 @@ monitor
 
 #### Help Documentation
 
-Pressing ESC from within the program will show you keyboard shortcuts and some quick information about 
+Pressing ESC from within the program will show you keyboard shortcuts (VIM and
+arrow keys, plus a few more) and some quick information about the syntax of the
+configuration file, and please check out http://Ixmon.com to see this program
+reincarnated as an ajax webapp.
+
