@@ -1,6 +1,7 @@
 
 ## IXmon 
-(Information eXtraction and MONitoring tool)
+
+Information eXtraction and MONitoring tool
 ==============
 
 A terminal based
