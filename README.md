@@ -11,6 +11,14 @@ an existing php installation should go off without a hitch), xterm, and
 optionally, "fortune", and the imagemagick command line tools for generating
 image previews. 
 
+To install as root, run the makefile with "make" and it will install to 
+/usr/local/bin/ixmon
+
+To install as a non-root user, run "make" and copy off the resulting .ixmon.build
+to wherever you'd like.
+
+
+
 ### Configuration
 
 The php script installs to /usr/local/bin/ixmon by default, and configuration
