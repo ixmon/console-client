@@ -9,7 +9,7 @@ src/classes/ncurses.class.php  \
 src/classes/Services_JSON.php  \
 src/classes/util.func.php
 
-all: install
+all: ixmon
 
 ixmon: ixmon-build 
 	@echo "ixmon built... now run 'make test'"
@@ -20,7 +20,7 @@ ixmon-build: clean
 
 install: test
 	@if [[ `whoami` != "root" ]] ;  \
-	then echo "Please run make install as root"; \
+	then echo "Please run make install as root to install to "$(install_target); \
 	exit 1; \
 	else echo "installing to "$(install_dir) ; \
 	fi;
@@ -38,7 +38,10 @@ test: ixmon-build
 	else \
 	$(foreach var,$(files), echo `php -n $(var)`;) exit 1; \
 	fi;
+	@mv .ixmon.build ixmon
 	@echo
+	
 
 clean:
 	@rm -f .ixmon.build
+	@rm -f ixmon
