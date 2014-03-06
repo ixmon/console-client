@@ -1,8 +1,10 @@
-## IXmon 
+# Ixmon 
 ###### Information eXtraction and MONitoring tool
 A terminal based
 (rss/atom/youtube/vine/instagram/weather/stocks/cryptocurrency/kitchen sink)
 feed reader and monitor written in php.
+
+![Alt text](/screenshots/ixmon_console.png "Ixmon console screenshot")
 
 ### Installation
 
@@ -11,11 +13,15 @@ an existing php installation should go off without a hitch), xterm, and
 optionally, "fortune", and the imagemagick command line tools for generating
 image previews. 
 
-To install as root, run the makefile with "make" and it will install to 
-/usr/local/bin/ixmon
+To build ixmon, run the Makefile one level up from the src/ directory
 
-To install as a non-root user, run "make" and copy off the resulting .ixmon.build
-to wherever you'd like.
+    make
+    make test
+    make install
+
+It will try to install to /usr/local/bin/ixmon by default, to install as a
+non-root user, just copy off the resulting executable "ixmon" script wherever
+you'd like. 
 
 
 
@@ -33,13 +39,15 @@ monitor
     # lines begining with a -- are group names
     #
     #
-    # the following example would create a group called 'trend data' with two feed urls 
-    # and a group called 'my crypto' tracking bitcoin and litecoin
-    # 
+    # The following example would create a group called 'trend data' with two
+    # feed urls,  a group called 'news' with two items, and a group called
+    # 'financial' with three items
+    #
     # --trend data
     # http://www.google.com/trends/hottrends/atom/feed?pn=p1
     # http://feeds.feedburner.com/RsoeEdis-EmergencyAndDisasterInformation
     # --news
+    # https://github.com/ixmon.atom
     # http://www.infowars.com/rss
     # --financial
     # coin://bitcoin
