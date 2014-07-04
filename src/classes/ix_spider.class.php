@@ -536,9 +536,9 @@ return true;
 }
 
 function parse_twitter($url) {
-
+   
 if (
-  !preg_match("/https?\:\/\/twitter\.com\/([^\/]+)/i", $url, $matches) 
+  !preg_match("/https?\:\/\/twitter\.com\/([^\/]+)/i", $url, $matches)
   ) {
 return false;
 }
@@ -548,12 +548,14 @@ $feed_title = "Twitter: $twitter_username";
 
 $data = $this->cache_get( $url );
 
-  foreach (explode('<div class="stream-item-header">', $data) as $chunk )  {
+  // foreach (explode('<div class="stream-item-header">', $data) as $chunk )  {
+  foreach (explode('<div class="ProfileTweet-contents">', $data) as $chunk )  {
   $img = $desc = $comments = $link = '';
-  $img = $this->parse_img($chunk, $img); 
+  $img = $this->parse_img($chunk, $img);
 
-    if ( preg_match('/<p class="js-tweet-text tweet-text">(.*)/is', $chunk, $matches) ) {
-    list($desc, $extra)  = explode ('<span class="expand-stream-item',  $matches[1]);
+    if ( preg_match('/<p class="ProfileTweet-text js-tweet-text u-dir"\s+dir="ltr">(.*)/is', $chunk, $matches) ) {
+    // list($desc, $extra)  = explode ('<span class="expand-stream-item',  $matches[1]);
+    list($desc, $extra)  = explode ('<ul class="ProfileTweet-actionList u-cf js-actions">',  $matches[1]);
     // $desc = $matches[1];
     $desc = preg_replace("/<[^>]+>/", "", $desc);
     $desc = preg_replace("/\r|\n/", " ", $desc);

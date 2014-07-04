@@ -1,5 +1,4 @@
 <?
-
 class ncurses {
 
   function ncurses() {
@@ -327,7 +326,9 @@ ncurses_color_set(5);
   // $this->window_index[$this->widget_count] = $name;
 
   $window = ncurses_newwin($height, $width, $y_pos, $x_pos); 
-  ncurses_getmaxyx(&$window, $height, $width);
+  // ncurses_getmaxyx(&$window, $height, $width);
+  // Fatal error: Call-time pass-by-reference has been removed 
+  ncurses_getmaxyx($window, $height, $width);
   $this->windows[$name]['obj']    = $window;
   $this->windows[$name]['height'] = $height;
   $this->windows[$name]['width']  = $width ;

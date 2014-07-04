@@ -4,6 +4,7 @@
 // ini_set("error_reporting", E_ERROR);
 
 date_default_timezone_set("America/New_York");
+sanity_check();
 wrap_in_xterm();
 @ini_set("memory_limit", -1);
 
@@ -418,6 +419,37 @@ return $debug;
 }
 
 
+function sanity_check () {
+
+$classes = array("ncurses", "monitor", "ix_spider");
+$errors = '';
+
+  foreach ($classes as $class) {
+    if (!class_exists($class) ) {
+    $errors .= "error loading $class\n";
+    }
+  }
+
+  if ($errors) {
+  die($errors);
+  }
+
+  if (!function_exists("ncurses_init") ) {
+  $errors .= "Please install php-ncurses ... maybe 'pecl install ncurses' ?\n";
+
+/*
+Ubuntu 14.04 Trusty Tahr
+apt-get install php5-dev libncursesw5-dev php-pear
+pecl install ncurses
+*/
+
+  }
+
+  if ($errors) {
+  die($errors);
+  }
+
+}
 
 
 function wrap_in_xterm () {

@@ -13,6 +13,12 @@ an existing php installation should go off without a hitch), xterm, and
 optionally, "fortune", and the imagemagick command line tools for generating
 image previews. 
 
+For dependencies on Ubuntu 14.04 Trusty Tahr, try
+
+apt-get install php5 php5-dev libncursesw5-dev php-pear fortune imagemagick 
+pecl install ncurses
+
+
 To build ixmon, run the Makefile one level up from the src/ directory
 
     make
