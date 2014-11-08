@@ -462,7 +462,9 @@ function wrap_in_xterm () {
   );
   exit;
   }
+  
   print "Looks like there is no xserver, running in console mode\n";
+  system("export XTERM_RUNNING=yes; $prog");
 
 }
 
