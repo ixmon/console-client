@@ -1,7 +1,7 @@
 #!/usr/bin/php  
 <?php
 // ini_set("display_errors", "On");
-// ini_set("error_reporting", E_ERROR);
+ini_set("error_reporting", E_ERROR);
 
 date_default_timezone_set("America/New_York");
 sanity_check();
