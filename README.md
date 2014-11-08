@@ -15,7 +15,8 @@ image previews.
 
 For dependencies on Ubuntu 14.04 Trusty Tahr, try
 
-apt-get install php5 php5-dev libncursesw5-dev php-pear fortune imagemagick 
+apt-get install php5 php5-dev libncursesw5-dev php-pear fortune imagemagick php5-curl
+
 pecl install ncurses
 
 
