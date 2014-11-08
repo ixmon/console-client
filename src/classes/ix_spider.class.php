@@ -1,4 +1,4 @@
-<?
+<?php
 
 class data_grid { function data_grid() {} }
 
@@ -553,7 +553,7 @@ $data = $this->cache_get( $url );
   $img = $desc = $comments = $link = '';
   $img = $this->parse_img($chunk, $img);
 
-    if ( preg_match('/<p class="ProfileTweet-text js-tweet-text u-dir"\s+dir="ltr">(.*)/is', $chunk, $matches) ) {
+    if ( preg_match('/<p class="ProfileTweet-text js-tweet-text u-dir"[^>]+>(.*)/is', $chunk, $matches) ) {
     // list($desc, $extra)  = explode ('<span class="expand-stream-item',  $matches[1]);
     list($desc, $extra)  = explode ('<ul class="ProfileTweet-actionList u-cf js-actions">',  $matches[1]);
     // $desc = $matches[1];

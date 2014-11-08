@@ -1,4 +1,4 @@
-<?
+<?php
 
 function short_str ($str, $limit, $space_pad=false) {
 

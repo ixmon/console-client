@@ -439,7 +439,7 @@ $errors = '';
 
 /*
 Ubuntu 14.04 Trusty Tahr
-apt-get install php5-dev libncursesw5-dev php-pear
+apt-get install php5-dev libncursesw5-dev php-pear php5-curl
 pecl install ncurses
 */
 
@@ -453,7 +453,7 @@ pecl install ncurses
 
 
 function wrap_in_xterm () {
-  if (!$_SERVER["XTERM_RUNNING"]) {
+  if (!isset($_SERVER["XTERM_RUNNING"])) {
 
   $prog = $GLOBALS['argv'][0];
   // "export XTERM_RUNNING=yes; xterm -geometry 280x74 -cr red -uc -ms black +sb -b 0 -w 0 -fg white -bg black -fa '-xos4-monospace-bold-r-normal--10-120-72-72-c-60-iso10646-1' -fs 9 -e '$prog'"

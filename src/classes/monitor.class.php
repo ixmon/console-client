@@ -1,4 +1,4 @@
-<?
+<?php
 
 class monitor extends ix_spider {
 
