@@ -458,7 +458,7 @@ $x_running = false;
 $xterm_running = false;
 $prog = "ixmon";
 
-  if ( isset($_SERVER['DISPLAY']) ) {
+  if ( isset($_SERVER['DISPLAY']) && strlen(trim($_SERVER['DISPLAY']))  ) {
     $x_running = true;
   }
 
@@ -477,8 +477,8 @@ $prog = "ixmon";
   );
   exit;
   }
-  elseif (!$x_running) {
-  print "Looks like there is no xserver, running in console mode\n";
+  elseif (!$x_running && $xterm_running) {
+  print "Looks like there is no xserver, running in console mode - $prog\n";
   sleep(1);
   system("export XTERM_RUNNING=yes; $prog");
   exit;
