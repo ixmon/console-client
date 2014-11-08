@@ -453,18 +453,37 @@ pecl install ncurses
 
 
 function wrap_in_xterm () {
-  if (isset($_SERVER['DISPLAY']) && !isset($_SERVER["XTERM_RUNNING"])) {
 
-  $prog = $GLOBALS['argv'][0];
+$x_running = false;
+$xterm_running = false;
+$prog = "ixmon";
+
+  if ( isset($_SERVER['DISPLAY']) ) {
+    $x_running = true;
+  }
+
+  if ( isset($_SERVER['XTERM_RUNNING']) ) {
+    $xterm_running = true;
+  }
+
+  if ( isset( $GLOBALS['argv'][0] ) ) {
+    $prog = $GLOBALS['argv'][0];
+  }
+
+  if ($x_running && !$xterm_running) {
   // "export XTERM_RUNNING=yes; xterm -geometry 280x74 -cr red -uc -ms black +sb -b 0 -w 0 -fg white -bg black -fa '-xos4-monospace-bold-r-normal--10-120-72-72-c-60-iso10646-1' -fs 9 -e '$prog'"
   system(
   "export XTERM_RUNNING=yes;LANG=en_US.UTF-8; xterm -u8 -geometry 280x74 -cr red -uc -ms black +sb -b 0 -w 0 -fg white -bg black -fa '-misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1' -fs 9 -e '$prog'"
   );
   exit;
   }
-  
+  elseif (!$x_running) {
   print "Looks like there is no xserver, running in console mode\n";
+  sleep(1);
   system("export XTERM_RUNNING=yes; $prog");
+  exit;
+  }
+  
 
 }
 
