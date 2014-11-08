@@ -1,5 +1,5 @@
 #!/usr/bin/php  
-<?
+<?php
 // ini_set("display_errors", "On");
 // ini_set("error_reporting", E_ERROR);
 
@@ -453,7 +453,7 @@ pecl install ncurses
 
 
 function wrap_in_xterm () {
-  if (!isset($_SERVER["XTERM_RUNNING"])) {
+  if (isset($_SERVER['DISPLAY']) && !isset($_SERVER["XTERM_RUNNING"])) {
 
   $prog = $GLOBALS['argv'][0];
   // "export XTERM_RUNNING=yes; xterm -geometry 280x74 -cr red -uc -ms black +sb -b 0 -w 0 -fg white -bg black -fa '-xos4-monospace-bold-r-normal--10-120-72-72-c-60-iso10646-1' -fs 9 -e '$prog'"
@@ -462,6 +462,8 @@ function wrap_in_xterm () {
   );
   exit;
   }
+  print "Looks like there is no xserver, running in console mode\n";
+
 }
 
 function category_menu_handler () {
