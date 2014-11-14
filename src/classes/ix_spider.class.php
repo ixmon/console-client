@@ -555,7 +555,9 @@ $data = $this->cache_get( $url );
 
     if ( preg_match('/<p class="ProfileTweet-text js-tweet-text u-dir"[^>]+>(.*)/is', $chunk, $matches) ) {
     // list($desc, $extra)  = explode ('<span class="expand-stream-item',  $matches[1]);
-    list($desc, $extra)  = explode ('<ul class="ProfileTweet-actionList u-cf js-actions">',  $matches[1]);
+    // list($desc, $extra)  = explode ('<ul class="ProfileTweet-actionList u-cf js-actions">',  $matches[1]);
+    list($desc, $extra)  = preg_split('/<\w+ class="ProfileTweet-action[^>]+>/',  $matches[1]);
+
     // $desc = $matches[1];
     $desc = preg_replace("/<[^>]+>/", "", $desc);
     $desc = preg_replace("/\r|\n/", " ", $desc);
