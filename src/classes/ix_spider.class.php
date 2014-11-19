@@ -535,8 +535,9 @@ $this->detected_handler = "youtube";
 return true;
 }
 
+
 function parse_twitter($url) {
-   
+
 if (
   !preg_match("/https?\:\/\/twitter\.com\/([^\/]+)/i", $url, $matches)
   ) {
@@ -549,11 +550,18 @@ $feed_title = "Twitter: $twitter_username";
 $data = $this->cache_get( $url );
 
   // foreach (explode('<div class="stream-item-header">', $data) as $chunk )  {
-  foreach (explode('<div class="ProfileTweet-contents">', $data) as $chunk )  {
+  // foreach (explode('<div class="ProfileTweet-contents">', $data) as $chunk )  {
+  foreach (explode('<div class="ProfileTweet-authorDetails">', $data) as $chunk )  {
   $img = $desc = $comments = $link = '';
   $img = $this->parse_img($chunk, $img);
 
+    if ( preg_match('/href="(\/[^\/]+\/status\/[^"\/]+)"/s', $chunk, $matches) ) {
+    $link = "https://twitter.com" . $matches[1];
+    }
+
+    // twitter format change detected on 11/8/2014
     if ( preg_match('/<p class="ProfileTweet-text js-tweet-text u-dir"[^>]+>(.*)/is', $chunk, $matches) ) {
+    // if ( preg_match('/<p class="ProfileTweet-text js-tweet-text u-dir"\s+dir="ltr">(.*)/is', $chunk, $matches) ) {
     // list($desc, $extra)  = explode ('<span class="expand-stream-item',  $matches[1]);
     // list($desc, $extra)  = explode ('<ul class="ProfileTweet-actionList u-cf js-actions">',  $matches[1]);
     list($desc, $extra)  = preg_split('/<\w+ class="ProfileTweet-action[^>]+>/',  $matches[1]);
@@ -567,9 +575,7 @@ $data = $this->cache_get( $url );
     $desc = $this->html2text($desc);
     }
 
-    if ( preg_match('/href="(\/[^\/]+\/status\/[^"\/]+)"/s', $chunk, $matches) ) {
-    $link = "https://twitter.com" . $matches[1];
-    }
+
 
     if ($desc ) {
         $title = "Twitter: $twitter_username - $desc";
@@ -586,6 +592,7 @@ $this->detected_handler = "twitter";
 
 return true;
 }
+
 
 function parse_stock($url) {
 // disallowing comma in the regex, only allow one stock here now
