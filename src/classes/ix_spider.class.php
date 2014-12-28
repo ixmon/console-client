@@ -197,21 +197,24 @@ return $img_url;
 }
 
 function parse_youtube_img ($str, $youtube) {
-if ($youtube) { return $youtube; }
+    if ($youtube) { return $youtube; }
 
-
-if ( preg_match("/http\:\/\/www.youtube.com\/v\/([a-zA-Z0-9\-_]+)/i", $str, $matches) ) {
-$image = "https://i.ytimg.com/vi/".$matches[1]."/mqdefault.jpg";
-}
-elseif ( preg_match("/youtube.com\/watch\?v=([a-zA-Z0-9_\-]+)feature/i", $str, $matches) ) {
-$image = "https://i.ytimg.com/vi/".$matches[1]."/mqdefault.jpg";
-}
-elseif ( preg_match("/youtube.com\/watch\?v=([a-zA-Z0-9_\-]+)/i", $str, $matches) ) {
-$image = "https://i.ytimg.com/vi/".$matches[1]."/mqdefault.jpg";
-}
-elseif ( preg_match("/youtube.com\/embed\/([a-zA-Z0-9_\-]+)\?/i", $str, $matches) ) {
-$image = "https://i.ytimg.com/vi/".$matches[1]."/mqdefault.jpg";
-}
+    if ( preg_match("/http\:\/\/www.youtube.com\/v\/([a-zA-Z0-9\-_]+)/i", $str, $matches) ) {
+    $image = "https://i.ytimg.com/vi/".$matches[1]."/mqdefault.jpg";
+    }
+    elseif ( preg_match("/youtube.com\/watch\?v=([a-zA-Z0-9_\-]+)feature/i", $str, $matches) ) {
+    $image = "https://i.ytimg.com/vi/".$matches[1]."/mqdefault.jpg";
+    }
+    elseif ( preg_match("/youtube.com\/watch\?v=([a-zA-Z0-9_\-]+)/i", $str, $matches) ) {
+    $image = "https://i.ytimg.com/vi/".$matches[1]."/mqdefault.jpg";
+    }
+    elseif ( preg_match("/youtube.com\/embed\/([a-zA-Z0-9_\-]+)\?/i", $str, $matches) ) {
+    $image = "https://i.ytimg.com/vi/".$matches[1]."/mqdefault.jpg";
+    }
+    // 12/27/2014 ... youtube's new multi-channel stuff
+    elseif ( preg_match("/youtube.com\/channel\/([a-zA-Z0-9_\-]+)\?/i", $str, $matches) ) {
+    $image = "https://i.ytimg.com/vi/".$matches[1]."/mqdefault.jpg";
+    }
 
 return $image;
 
@@ -446,20 +449,21 @@ function parse_youtube ($url) {
   $youtube_channel = $matches[1];
   $final_url = "https://www.youtube.com/user/$youtube_channel";
   }
+  elseif ( preg_match('|/channel/([^/\?]+)|', $url, $matches) ) {
+  $youtube_channel = $matches[1];
+  $final_url = "https://www.youtube.com/channel/$youtube_channel";
+  $just_channel = true;
+  }
   else {
   $data = $this->cache_get($url);
 
     if ( preg_match('|href="/user/([^\?]+)\?feature=watch|', $data, $matches) ) {
     $youtube_channel = $matches[1];
     $final_url = $this->scrub("https://www.youtube.com/user/$youtube_channel", 500) ;
-    
     }
 
   }
 
-if (!$final_url) {
-return false;
-}
 
 if ($this->fid && $url != $final_url) {
     $this->query("update feeds set url='$final_url' where id='$this->fid' limit 1");
@@ -467,22 +471,23 @@ if ($this->fid && $url != $final_url) {
     }
 
 
-/*
-
-if ($this->mode == "test") {
-// hmmm
-}
-  if ( !preg_match("/youtube\.com\/user\/([a-zA-Z0-9-_\.]+)/", $url, $matches) ) {
-  return false;
+  if ($just_channel) {
+  $channel_url = "https://www.youtube.com/channel/$youtube_channel/videos";
   }
-*/
-
-
+  else {
   $channel_url = "https://www.youtube.com/user/$youtube_channel/videos?flow=grid&view=0";
+  }
 
 
-  $feed_title = "Youtube Channel: $youtube_channel";
   $data = $this->cache_get($channel_url);
+
+  if ($just_channel) {
+  $feed_title = "Youtube Channel: " . preg_replace("/-\s+YouTube\s?$/", "", $this->parse_tag("title", $data, $feed_title));
+  }
+  else {
+  $feed_title = "Youtube Channel: $youtube_channel";
+  }
+
     
    // foreach ( preg_split("/content-item/", $data) as $chunk ) {
    foreach ( preg_split("/yt-lockup-content/", $data) as $chunk ) {
