@@ -554,18 +554,23 @@ $feed_title = "Twitter: $twitter_username";
 
 $data = $this->cache_get( $url );
 
-  // foreach (explode('<div class="stream-item-header">', $data) as $chunk )  {
+
+    // twitter format change detected on 6/22/2015 they went back to the old css, weird
+  foreach (explode('<div class="stream-item-header">', $data) as $chunk )  {
   // foreach (explode('<div class="ProfileTweet-contents">', $data) as $chunk )  {
-  foreach (explode('<div class="ProfileTweet-authorDetails">', $data) as $chunk )  {
+  // foreach (explode('<div class="ProfileTweet-authorDetails">', $data) as $chunk )  {
   $img = $desc = $comments = $link = '';
   $img = $this->parse_img($chunk, $img);
+
 
     if ( preg_match('/href="(\/[^\/]+\/status\/[^"\/]+)"/s', $chunk, $matches) ) {
     $link = "https://twitter.com" . $matches[1];
     }
 
+    // twitter format change detected on 6/22/2015
+    if ( preg_match('/<p class="TweetTextSize[^"]+"[^>]+>(.*)/is', $chunk, $matches) ) {
     // twitter format change detected on 11/8/2014
-    if ( preg_match('/<p class="ProfileTweet-text js-tweet-text u-dir"[^>]+>(.*)/is', $chunk, $matches) ) {
+    // if ( preg_match('/<p class="ProfileTweet-text js-tweet-text u-dir"[^>]+>(.*)/is', $chunk, $matches) ) {
     // if ( preg_match('/<p class="ProfileTweet-text js-tweet-text u-dir"\s+dir="ltr">(.*)/is', $chunk, $matches) ) {
     // list($desc, $extra)  = explode ('<span class="expand-stream-item',  $matches[1]);
     // list($desc, $extra)  = explode ('<ul class="ProfileTweet-actionList u-cf js-actions">',  $matches[1]);
@@ -587,6 +592,7 @@ $data = $this->cache_get( $url );
         $desc = "Tweet------\n$desc\nLink-----\n$link\n";
         // link
         // img
+# print "feed_title=$feed_title\ntitle=$title\ndesc=$desc\nlink=$link\nimg=$img\n";
       $this->add_item($feed_title, $title, $desc, $link, $img);
 
     }
@@ -1371,11 +1377,11 @@ return $json->decode($str);
 
 }
 
-function debug ($str) {
-if (!$_SERVER['REQUEST_URI'] ) {
-print "$str\n";
-}
-}
+  function debug ($str) {
+    if (!$_SERVER['REQUEST_URI'] ) {
+    print "$str\n";
+    }
+  }
 
 
 }
